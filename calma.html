@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kit de Calma y Regulación | Asistente para Ansiedad y Pánico | Lic. Jésica Favara</title>
+<meta name="description" content="Herramienta interactiva de apoyo para ataques de pánico y ansiedad: respiración guiada progresiva, grounding 5-4-3-2-1 y directorio internacional de crisis.">
+<meta name="author" content="Jésica Verónica Favara">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<meta name="theme-color" content="#fbf7f1">
+<link rel="canonical" href="https://jesicafavara.com.ar/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf7f1;--surface:#ffffff;--ink:#1d1a17;--muted:#5f534a;--brand:#a9603f;--accent:#c08463;--soft:#f6ede2;--line:#e8d9c8;--onbrand:#fbf6ef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1713;--surface:#261f19;--ink:#f0e6d9;--muted:#b8a898;--brand:#e0a07c;--accent:#d58f68;--soft:#241d17;--line:#3b3027;--onbrand:#1c1713}}
+:root[data-theme="dark"]{--bg:#1c1713;--surface:#261f19;--ink:#f0e6d9;--muted:#b8a898;--brand:#e0a07c;--accent:#d58f68;--soft:#241d17;--line:#3b3027;--onbrand:#1c1713}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 "Atkinson Hyperlegible",Verdana,system-ui,sans-serif}
+h1,h2,h3{font-family:"Atkinson Hyperlegible",Verdana,system-ui,sans-serif;font-weight:700;line-height:1.2;margin:0 0 .5em;color:var(--ink)}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);letter-spacing:.01em;margin:0 0 .15em}
+.hero .sub{font-size:.95rem;letter-spacing:.01em;color:var(--brand);margin:0 0 1.4em}
+h2{font-size:clamp(1.5rem,3.2vw,2.1rem)}
+h3{font-size:1.25rem}
+p{margin:0 0 1em;max-width:70ch}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;flex-wrap:wrap}
+.logo{font-weight:700;font-size:1.25rem;text-decoration:none;color:var(--ink)}
+.tab-nav{display:flex;gap:8px;list-style:none;margin:0;padding:4px 0 12px;overflow-x:auto;scrollbar-width:none}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{display:flex;align-items:center;gap:9px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);white-space:nowrap;font:inherit;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+.tab-btn:hover{border-color:var(--accent);color:var(--brand)}
+.tab-btn[aria-selected="true"]{background:var(--brand);border-color:var(--brand);color:var(--onbrand)}
+.tab-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.hero{padding:56px 0 40px;background:linear-gradient(180deg,var(--soft),var(--bg))}
+.hero p.lead{font-size:1.15rem;color:var(--muted)}
+section{padding:48px 0}
+.alt-bg{background:var(--soft)}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;margin-bottom:20px}
+.box p{margin:0 0 1em;color:var(--muted)}
+.box p:last-child{margin-bottom:0}
+.panel{display:none}
+.panel.active{display:block}
+
+/* Emergency banner */
+.emergency-banner{background:var(--surface);border-left:4px solid var(--brand);padding:18px 22px;border-radius:0 12px 12px 0;margin-bottom:28px;display:flex;gap:16px;align-items:flex-start}
+.emergency-banner svg{width:26px;height:26px;stroke:var(--brand);fill:none;stroke-width:2;flex:none;margin-top:2px}
+.emergency-banner p{margin:0;color:var(--ink);font-size:0.98rem}
+
+/* Breathing UI */
+.breathing-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 0}
+.respirator-stage{position:relative;width:260px;height:260px;display:flex;align-items:center;justify-content:center;margin:20px 0 30px}
+.respirator-circle{position:absolute;width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--accent));display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(169,96,63,0.25);transform:scale(1);will-change:transform}
+.respirator-outer-ring{position:absolute;width:240px;height:240px;border-radius:50%;border:2px dashed var(--line);animation:spinSlow 30s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.respirator-content{position:relative;z-index:2;text-align:center;color:var(--onbrand)}
+.phase-text{font-size:1.2rem;font-weight:700;letter-spacing:0.02em;text-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.timer-text{font-size:2.2rem;font-weight:700;line-height:1;margin-top:4px;text-shadow:0 1px 3px rgba(0,0,0,0.2)}
+
+.pattern-selector{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.pattern-btn{font:inherit;font-size:0.88rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all 0.2s}
+.pattern-btn:hover{border-color:var(--accent)}
+.pattern-btn.active{background:var(--brand);border-color:var(--brand);color:var(--onbrand)}
+
+.breathing-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-block;background:var(--brand);color:var(--onbrand);padding:12px 24px;border-radius:999px;text-decoration:none;font-weight:600;border:2px solid var(--brand);cursor:pointer;font:inherit;text-align:center}
+.btn.alt{background:transparent;color:var(--brand)}
+.btn.secondary{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn:hover{filter:brightness(1.1)}
+
+/* Grounding Wizard */
+.wizard-progress{display:flex;gap:8px;margin-bottom:24px;justify-content:center}
+.progress-step{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;color:var(--muted)}
+.progress-step.active{background:var(--brand);border-color:var(--brand);color:var(--onbrand)}
+.progress-step.completed{background:var(--soft);border-color:var(--accent);color:var(--brand)}
+
+.grounding-step-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+.step-header{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.step-badge{width:44px;height:44px;border-radius:50%;background:var(--soft);color:var(--brand);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;flex:none}
+.grounding-inputs{display:grid;gap:12px}
+.grounding-input-group{display:flex;align-items:center;gap:12px}
+.g-input{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.checkbox-custom{width:24px;height:24px;border-radius:6px;border:2px solid var(--line);background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;transition:all 0.2s}
+.checkbox-custom.checked{background:var(--brand);border-color:var(--brand)}
+.checkbox-custom.checked::after{content:'';width:6px;height:10px;border:solid var(--onbrand);border-width:0 2px 2px 0;transform:rotate(45deg);margin-bottom:2px}
+
+/* Crisis & First Aid Grid */
+.crisis-grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.phone-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:space-between}
+.phone-number{font:700 1.5rem "Atkinson Hyperlegible",Verdana,sans-serif;color:var(--brand);text-decoration:none;display:inline-block;margin-top:8px}
+.phone-number:hover{text-decoration:underline}
+
+.summary-list{list-style:none;padding:0;margin:16px 0}
+.summary-item{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:0.92rem;color:var(--muted)}
+
+footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:0.9rem}
+footer p{max-width:none}
+
+@media (max-width:600px){
+  .hero{padding:36px 0 24px}
+  section{padding:32px 0}
+  .box{padding:18px}
+  .respirator-stage{width:220px;height:220px}
+  .respirator-circle{width:150px;height:150px}
+  .respirator-outer-ring{width:200px;height:200px}
+}
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap">
+    <nav aria-label="Navegación principal" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+      <div style="margin:0 auto 0 0;">
+        <div style="font-size:1.1rem; font-weight:700; color:var(--ink);">Asistente para Ansiedad y Pánico</div>
+      </div>
+      <div>
+        <a href="https://jesicafavara.com.ar/" style="display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:0.88rem; text-decoration:none;">← Ir a la web principal</a>
+      </div>
+    </nav>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-nav" role="tablist" aria-label="Herramientas de autorregulación">
+      <button role="tab" class="tab-btn" id="tab-breath" aria-selected="true" aria-controls="panel-breath">
+        <svg viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2M9.6 4.6A2 2 0 1 1 11 8H2M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>
+        Respiración Guiada
+      </button>
+      <button role="tab" class="tab-btn" id="tab-ground" aria-selected="false" aria-controls="panel-ground">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Grounding 5-4-3-2-1
+      </button>
+      <button role="tab" class="tab-btn" id="tab-sos" aria-selected="false" aria-controls="panel-sos">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Primeros Auxilios y Crisis
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="wrap" style="padding-top:28px; padding-bottom:56px;">
+    
+    <!-- Permanent Empirical Reassurance Banner -->
+    <div class="emergency-banner" role="status">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div>
+        <p><strong>Estás a salvo en este momento.</strong> Lo que sentís es una descarga de adrenalina en tu sistema nervioso. Es sumamente incómoda, pero <em>no es peligrosa</em> y va a disminuir pauatinamente.</p>
+      </div>
+    </div>
+
+    <!-- PANEL 1: RESPIRACIÓN GUIADA -->
+    <section id="panel-breath" class="panel active" role="tabpanel" aria-labelledby="tab-breath">
+      <div class="box">
+        <h2>Respiración para Regular el Sistema Nervioso</h2>
+        <p>La exhalación prolongada activa el sistema parasimpático, enviando una señal directa al cerebro de que el peligro físico ha cesado.</p>
+        
+        <!-- Pattern & Mode Selectors -->
+        <p style="font-weight:600; font-size:0.9rem; margin-bottom:8px;">Seleccioná el modo o técnica:</p>
+        <div class="pattern-selector" role="radiogroup" aria-label="Patrones de respiración">
+          <button type="button" class="pattern-btn active" data-pattern="progressive">🔄 Progresiva (Inicia en 4-4-4-4 y sube +1s por ciclo)</button>
+          <button type="button" class="pattern-btn" data-pattern="box">Cuadrada (4-4-4-4 fija)</button>
+          <button type="button" class="pattern-btn" data-pattern="478">Calma Profunda (4-7-8)</button>
+          <button type="button" class="pattern-btn" data-pattern="diaphragm">Tranquilizadora (4-6)</button>
+          <button type="button" class="pattern-btn" data-pattern="custom">⚙️ Personalizada</button>
+        </div>
+
+        <!-- Custom Breathing Controls (Hidden by default) -->
+        <div id="customControls" class="box" style="display:none; background:var(--bg); margin-bottom:20px; padding:16px;">
+          <p style="font-weight:600; margin-bottom:12px; font-size:0.95rem;">Configurá la duración de cada fase en segundos:</p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap:12px;">
+            <label style="font-size:0.85rem; font-weight:600;">Inhalar:
+              <input type="number" id="cfgInhale" min="1" max="15" value="4" style="width:100%; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+            <label style="font-size:0.85rem; font-weight:600;">Sostener:
+              <input type="number" id="cfgHold" min="0" max="15" value="4" style="width:100%; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+            <label style="font-size:0.85rem; font-weight:600;">Exhalar:
+              <input type="number" id="cfgExhale" min="1" max="15" value="4" style="width:100%; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+            <label style="font-size:0.85rem; font-weight:600;">Pausa:
+              <input type="number" id="cfgPause" min="0" max="15" value="4" style="width:100%; padding:6px 10px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+          </div>
+        </div>
+
+        <!-- Breathing Animated Visual Stage -->
+        <div class="breathing-container">
+          <div id="cycleIndicator" style="font-size:0.85rem; color:var(--brand); font-weight:600; margin-bottom:8px; min-height:1.2em;"></div>
+          <div class="respirator-stage" aria-live="polite">
+            <div class="respirator-outer-ring"></div>
+            <div class="respirator-circle" id="respiratorCircle">
+              <div class="respirator-inner-pulse"></div>
+            </div>
+            <div class="respirator-content">
+              <div class="phase-text" id="phaseText">Listo</div>
+              <div class="timer-text" id="timerText">0</div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="breathing-actions">
+            <button type="button" class="btn" id="startBreathingBtn">Iniciar Respiración</button>
+            <button type="button" class="btn secondary" id="soundToggleBtn">Sonido Guía: Desactivado</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 2: ANCLAJE 5-4-3-2-1 -->
+    <section id="panel-ground" class="panel" role="tabpanel" aria-labelledby="tab-ground">
+      <div class="box">
+        <h2>Técnica de Grounding 5-4-3-2-1</h2>
+        <p>Cuando la mente se acelera, este ejercicio redirige la atención hacia los canales sensoriales concretos del aquí y ahora.</p>
+
+        <!-- Progress Indicator -->
+        <div class="wizard-progress" id="wizardProgress">
+          <div class="progress-step active" data-step="0">5</div>
+          <div class="progress-step" data-step="1">4</div>
+          <div class="progress-step" data-step="2">3</div>
+          <div class="progress-step" data-step="3">2</div>
+          <div class="progress-step" data-step="4">1</div>
+        </div>
+
+        <!-- Dynamic Wizard Card -->
+        <div id="stepCard" class="grounding-step-card">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PANEL 3: PRIMEROS AUXILIOS Y CRISIS -->
+    <section id="panel-sos" class="panel" role="tabpanel" aria-labelledby="tab-sos">
+      <div class="box">
+        <h2>Primeros Auxilios Emocionales y Directorio Internacional</h2>
+        <p>Herramientas de regulación rápida basadas en DBT y recursos de urgencia para pacientes en Argentina y el mundo hispanohablante.</p>
+
+        <div style="margin:24px 0;">
+          <h3 style="margin-bottom:12px;">Estrategias físicas inmediatas (DBT)</h3>
+          <div style="display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));">
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">💧 Cambio de temperatura (Reflejo de buceo)</strong>
+              <p style="font-size:0.9rem; margin:0;">Salpicate la cara con agua fría o sostené un hielo durante 15 segundos. Esto reduce abruptamente el ritmo cardíaco acelerado.</p>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🧱 Push a la pared (Resistencia isométrica)</strong>
+              <p style="font-size:0.9rem; margin:0;">Apoyá las palmas con firmeza contra una pared y empujá durante 10 segundos como si quisieras moverla. Canaliza la descarga motora sin sobrecargar el pulso.</p>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🤲 Manos dispuestas / Willing Hands (DBT)</strong>
+              <p style="font-size:0.9rem; margin:0;">Colocá las manos sobre las piernas con las palmas abiertas hacia arriba y aflojá la mandíbula. Le indica fisiológicamente al cerebro que no hay amenaza activa.</p>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🍋 Estímulo sensorial intenso</strong>
+              <p style="font-size:0.9rem; margin:0;">Morder una rodaja de limón, probar una menta fuerte o oler un aceite esencial penetrante interrumpe en segundos el bucle de pensamientos de pánico.</p>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🫂 Presión propioceptiva (Abrazo de mariposa)</strong>
+              <p style="font-size:0.9rem; margin:0;">Cruzá los brazos sobre el pecho y da golpecitos suaves y alternados en los hombros. Esta estimulación bilateral calma la hiperactivación del sistema nervioso.</p>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">✊ Tensión y liberación muscular intensa</strong>
+              <p style="font-size:0.9rem; margin:0;">Cerrá los puños o apretá los hombros con fuerza durante 5 segundos y soltá de golpe. Permite descargar la activación muscular acumulada por la adrenalina.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:32px;">
+          <h3 style="margin-bottom:12px;">Líneas de atención en crisis y emergencias</h3>
+          <p style="font-size:0.95rem;">Seleccioná tu país para ver las líneas gratuitas locales:</p>
+          
+          <div style="margin-bottom:16px;">
+            <select id="countrySelect" style="width:100%; max-width:320px; padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; font-weight:600;">
+              <option value="AR">🇦🇷 Argentina</option>
+              <option value="ES">🇪🇸 España</option>
+              <option value="MX">🇲🇽 México</option>
+              <option value="CL">🇨🇱 Chile</option>
+              <option value="CO">🇨🇴 Colombia</option>
+              <option value="US">🇺🇸 EE.UU. y Canadá</option>
+              <option value="OTHER">🌎 Otros países / Internacional</option>
+            </select>
+          </div>
+
+          <div id="crisisCardContainer" class="crisis-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="margin-bottom:0.5em;">Lic. Jésica Verónica Favara · Psicóloga · MN 58.746 · Buenos Aires, Argentina.</p>
+    <p style="font-size:0.85rem; color:var(--muted); margin:0;">La información de este sitio es de carácter orientativo y no constituye un diagnóstico ni reemplaza la consulta profesional individualizada.</p>
+  </div>
+</footer>
+
+<script>
+// --- TABS CONTROLLER ---
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.setAttribute('aria-selected', 'false'));
+    panels.forEach(p => p.classList.remove('active'));
+    
+    btn.setAttribute('aria-selected', 'true');
+    const targetId = btn.getAttribute('aria-controls');
+    document.getElementById(targetId).classList.add('active');
+  });
+});
+
+// --- WEB AUDIO API (GENTLE AUDIO CUES) ---
+let audioCtx = null;
+let soundEnabled = false;
+
+function playCalmTone(freq, duration) {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+document.getElementById('soundToggleBtn').addEventListener('click', function() {
+  soundEnabled = !soundEnabled;
+  this.textContent = `Sonido Guía: ${soundEnabled ? 'Activado' : 'Desactivado'}`;
+  this.classList.toggle('alt', soundEnabled);
+  if (soundEnabled) playCalmTone(440, 0.5);
+});
+
+// --- BREATHING ENGINE ---
+let isBreathing = false;
+let breathingTimeout = null;
+let currentPatternKey = 'progressive';
+let cycleCount = 0;
+
+const respiratorCircle = document.getElementById('respiratorCircle');
+const phaseText = document.getElementById('phaseText');
+const timerText = document.getElementById('timerText');
+const cycleIndicator = document.getElementById('cycleIndicator');
+const startBtn = document.getElementById('startBreathingBtn');
+const customControls = document.getElementById('customControls');
+
+const predefinedPatterns = {
+  progressive: { inhale: 4, hold: 4, exhale: 4, pause: 4, name: 'Progresiva (+1s por ciclo)' },
+  box: { inhale: 4, hold: 4, exhale: 4, pause: 4, name: 'Cuadrada (4-4-4-4)' },
+  478: { inhale: 4, hold: 7, exhale: 8, pause: 0, name: 'Calma Profunda (4-7-8)' },
+  diaphragm: { inhale: 4, hold: 0, exhale: 6, pause: 0, name: 'Tranquilizadora (4-6)' }
+};
+
+document.querySelectorAll('.pattern-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentPatternKey = btn.dataset.pattern;
+    customControls.style.display = currentPatternKey === 'custom' ? 'block' : 'none';
+    if (isBreathing) stopBreathing();
+  });
+});
+
+function getBreathingTimings() {
+  if (currentPatternKey === 'custom') {
+    return {
+      inhale: Math.max(1, parseInt(document.getElementById('cfgInhale').value) || 4),
+      hold: Math.max(0, parseInt(document.getElementById('cfgHold').value) || 0),
+      exhale: Math.max(1, parseInt(document.getElementById('cfgExhale').value) || 4),
+      pause: Math.max(0, parseInt(document.getElementById('cfgPause').value) || 0)
+    };
+  }
+  
+  const base = predefinedPatterns[currentPatternKey];
+  if (currentPatternKey === 'progressive') {
+    // Add cycleCount seconds to each active phase
+    const bonus = cycleCount;
+    return {
+      inhale: base.inhale + bonus,
+      hold: base.hold > 0 ? base.hold + bonus : 0,
+      exhale: base.exhale + bonus,
+      pause: base.pause > 0 ? base.pause + bonus : 0
+    };
+  }
+  return base;
+}
+
+startBtn.addEventListener('click', () => {
+  if (isBreathing) {
+    stopBreathing();
+  } else {
+    startBreathing();
+  }
+});
+
+function startBreathing() {
+  isBreathing = true;
+  cycleCount = 0;
+  startBtn.textContent = 'Detener';
+  startBtn.classList.add('alt');
+  runBreathingCycle();
+}
+
+function stopBreathing() {
+  isBreathing = false;
+  clearTimeout(breathingTimeout);
+  respiratorCircle.style.transition = 'transform 0.5s ease-out';
+  respiratorCircle.style.transform = 'scale(1)';
+  phaseText.textContent = 'Listo';
+  timerText.textContent = '0';
+  cycleIndicator.textContent = '';
+  startBtn.textContent = 'Iniciar Respiración';
+  startBtn.classList.remove('alt');
+}
+
+function runBreathingCycle() {
+  if (!isBreathing) return;
+  const timings = getBreathingTimings();
+  
+  if (currentPatternKey === 'progressive') {
+    cycleIndicator.textContent = `Ciclo ${cycleCount + 1}: Fases de ${timings.inhale}s`;
+  } else {
+    cycleIndicator.textContent = predefinedPatterns[currentPatternKey] ? predefinedPatterns[currentPatternKey].name : 'Personalizado';
+  }
+
+  // 1. INHALE
+  runPhase('Inhalá', timings.inhale, 1.4, 349.23, () => {
+    // 2. HOLD
+    if (timings.hold > 0) {
+      runPhase('Sostené', timings.hold, 1.4, 440, () => {
+        // 3. EXHALE
+        runPhase('Exhalá', timings.exhale, 1.0, 261.63, () => {
+          // 4. PAUSE
+          if (timings.pause > 0) {
+            runPhase('Pausa', timings.pause, 1.0, 220, () => {
+              cycleCount++;
+              runBreathingCycle();
+            });
+          } else {
+            cycleCount++;
+            runBreathingCycle();
+          }
+        });
+      });
+    } else {
+      // EXHALE IMMEDIATELY
+      runPhase('Exhalá', timings.exhale, 1.0, 261.63, () => {
+        if (timings.pause > 0) {
+          runPhase('Pausa', timings.pause, 1.0, 220, () => {
+            cycleCount++;
+            runBreathingCycle();
+          });
+        } else {
+          cycleCount++;
+          runBreathingCycle();
+        }
+      });
+    }
+  });
+}
+
+function runPhase(name, durationSec, targetScale, toneFreq, onComplete) {
+  if (!isBreathing) return;
+  phaseText.textContent = name;
+  respiratorCircle.style.transition = `transform ${durationSec}s ease-in-out`;
+  respiratorCircle.style.transform = `scale(${targetScale})`;
+  playCalmTone(toneFreq, 0.4);
+
+  let secondsLeft = durationSec;
+  timerText.textContent = secondsLeft;
+
+  const countdownInterval = setInterval(() => {
+    secondsLeft--;
+    if (secondsLeft > 0 && isBreathing) {
+      timerText.textContent = secondsLeft;
+    } else {
+      clearInterval(countdownInterval);
+    }
+  }, 1000);
+
+  breathingTimeout = setTimeout(() => {
+    clearInterval(countdownInterval);
+    if (isBreathing) onComplete();
+  }, durationSec * 1000);
+}
+
+// --- GROUNDING WIZARD 5-4-3-2-1 ---
+const groundingStepsData = [
+  { count: 5, title: '5 Cosas que podés VER', prompt: 'Observá tu entorno y anotá o marcá 5 objetos específicos a tu alrededor (colores, sombras, texturas):', placeholder: 'Ej: Una planta, un marco de foto, la luz en la pared...' },
+  { count: 4, title: '4 Cosas que podés TOCAR', prompt: 'Conectá con las sensaciones táctiles reales. Tocá o enfocate en 4 texturas presentes:', placeholder: 'Ej: La tela de mi pantalón, la mesa de madera fría...' },
+  { count: 3, title: '3 Cosas que podés ESCUCHAR', prompt: 'Prestá atención sostenida a los sonidos ambientales más sutiles o distantes:', placeholder: 'Ej: El viento afuerta, el motor de la heladera, mi respiración...' },
+  { count: 2, title: '2 Cosas que podés OLER', prompt: 'Inhalá suavemente y percibí 2 aromas u olores en tu espacio cercano:', placeholder: 'Ej: Perfume de jabón, aire fresco, café...' },
+  { count: 1, title: '1 Cosa que podés SABOREAR', prompt: 'Registrá 1 sabor en tu boca en este instante o realizá 1 afirmación positiva de calma:', placeholder: 'Ej: Gusto a menta fresca o "Estoy a salvo en este instante"' }
+];
+
+let currentStepIdx = 0;
+let userGroundingAnswers = Array(5).fill(null).map(() => []);
+
+const stepCard = document.getElementById('stepCard');
+const progressSteps = document.querySelectorAll('.progress-step');
+
+function renderGroundingStep() {
+  if (currentStepIdx >= groundingStepsData.length) {
+    renderGroundingCompletion();
+    return;
+  }
+
+  const data = groundingStepsData[currentStepIdx];
+  
+  // Update wizard step indicators
+  progressSteps.forEach((st, idx) => {
+    st.classList.remove('active', 'completed');
+    if (idx < currentStepIdx) st.classList.add('completed');
+    if (idx === currentStepIdx) st.classList.add('active');
+  });
+
+  let inputsHTML = '';
+  for (let i = 0; i < data.count; i++) {
+    const val = userGroundingAnswers[currentStepIdx][i] || '';
+    inputsHTML += `
+      <div class="grounding-input-group">
+        <div class="checkbox-custom ${val.trim() !== '' ? 'checked' : ''}" onclick="toggleGCheck(this, ${i})"></div>
+        <input type="text" class="g-input" placeholder="${data.placeholder}" value="${val}" oninput="updateGVal(${i}, this.value)">
+      </div>
+    `;
+  }
+
+  stepCard.innerHTML = `
+    <div class="step-header">
+      <div class="step-badge">${data.count}</div>
+      <div>
+        <h3 style="margin:0;">${data.title}</h3>
+        <p style="margin:0; font-size:0.9rem; color:var(--muted);">${data.prompt}</p>
+      </div>
+    </div>
+    <div class="grounding-inputs">${inputsHTML}</div>
+    <div style="display:flex; justify-size:space-between; gap:12px; margin-top:24px; flex-wrap:wrap;">
+      ${currentStepIdx > 0 ? `<button type="button" class="btn secondary" onclick="prevGStep()">Anterior</button>` : '<div></div>'}
+      <button type="button" class="btn" onclick="nextGStep()">${currentStepIdx === 4 ? 'Finalizar Anclaje' : 'Siguiente Paso →'}</button>
+    </div>
+  `;
+}
+
+function updateGVal(idx, value) {
+  userGroundingAnswers[currentStepIdx][idx] = value;
+  const container = stepCard.querySelectorAll('.grounding-input-group')[idx];
+  if (container) {
+    const check = container.querySelector('.checkbox-custom');
+    check.classList.toggle('checked', value.trim() !== '');
+  }
+}
+
+function toggleGCheck(el, idx) {
+  el.classList.toggle('checked');
+  const input = el.nextElementSibling;
+  if (el.classList.contains('checked') && !input.value) {
+    input.value = 'Reconocido';
+    userGroundingAnswers[currentStepIdx][idx] = 'Reconocido';
+  }
+}
+
+function nextGStep() {
+  currentStepIdx++;
+  renderGroundingStep();
+}
+
+function prevGStep() {
+  if (currentStepIdx > 0) {
+    currentStepIdx--;
+    renderGroundingStep();
+  }
+}
+
+function renderGroundingCompletion() {
+  progressSteps.forEach(st => st.classList.add('completed'));
+
+  let summaryHTML = '<ul class="summary-list">';
+  groundingStepsData.forEach((stData, sIdx) => {
+    const items = userGroundingAnswers[sIdx].filter(x => x && x.trim() !== '');
+    if (items.length > 0) {
+      summaryHTML += `<li class="summary-item"><strong>${stData.title}:</strong> ${items.join(', ')}</li>`;
+    }
+  });
+  summaryHTML += '</ul>';
+
+  stepCard.innerHTML = `
+    <div style="text-align:center; padding:10px 0;">
+      <div style="width:56px; height:56px; border-radius:50%; background:var(--soft); color:var(--brand); display:inline-flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:700; margin-bottom:12px;">✓</div>
+      <h3 style="margin-bottom:8px;">¡Excelente trabajo de anclaje!</h3>
+      <p style="color:var(--muted); font-size:0.95rem;">Has reconectado con tu entorno sensorial. Tu cuerpo y tu mente vuelven al presente seguro.</p>
+      ${summaryHTML}
+      <button type="button" class="btn" style="margin-top:16px;" onclick="resetGrounding()">Reiniciar Ejercicio</button>
+    </div>
+  `;
+}
+
+function resetGrounding() {
+  currentStepIdx = 0;
+  userGroundingAnswers = Array(5).fill(null).map(() => []);
+  renderGroundingStep();
+}
+
+renderGroundingStep();
+
+// --- CRISIS DIRECTORY SELECTOR ---
+const crisisData = {
+  AR: [
+    { name: 'Asistencia al Suicida y Crisis (AMBA / Arg)', num: '135', desc: 'Atención gratuita las 24 hs.' },
+    { name: 'Emergencias Médicas (SAME / Salud)', num: '107', desc: 'Ambulancias y emergencias médicas.' },
+    { name: 'Línea de Salud Mental CABA', num: '0800-999-0099', desc: 'Orientación y apoyo profesional.' }
+  ],
+  ES: [
+    { name: 'Línea de Atención a la Conducta Suicida', num: '024', desc: 'Atención nacional gratuita 24/7.' },
+    { name: 'Teléfono de la Esperanza', num: '717 003 717', desc: 'Asistencia emocional en crisis.' },
+    { name: 'Emergencias Generales', num: '112', desc: 'Urgencias médicas e intervenciones.' }
+  ],
+  MX: [
+    { name: 'Línea de la Vida (Secretaría de Salud)', num: '800 911 2000', desc: 'Atención 24 hs en todo México.' },
+    { name: 'SAPTEL (Apoyo Psicológico)', num: '55 5259 8121', desc: 'Servicio de salud mental por teléfono.' }
+  ],
+  CL: [
+    { name: 'Línea Quédate (Prevención MinSal)', num: '*4141', desc: 'Gratuito desde celulares 24 hs.' },
+    { name: 'Salud Responde', num: '600 360 7777', desc: 'Orientación profesional de salud.' }
+  ],
+  CO: [
+    { name: 'Línea 106 (Salud Mental Bogotá)', num: '106', desc: 'Ayuda y escucha profesional.' },
+    { name: 'Línea Nacional de Emergencias', num: '123', desc: 'Atención inmediata de urgencias.' }
+  ],
+  US: [
+    { name: 'Suicide & Crisis Lifeline (EE.UU.)', num: '988', desc: 'Llamada o texto en español 24/7.' },
+    { name: 'Crisis Text Line', num: 'Envía HOLA al 741741', desc: 'Apoyo por mensaje de texto.' }
+  ],
+  OTHER: [
+    { name: 'Befrienders Worldwide', num: 'befrienders.org', desc: 'Directorio global de líneas de prevención por país.' },
+    { name: 'Find A Helpline', num: 'findahelpline.com', desc: 'Buscador gratuito e confidencial de apoyo en crisis internacional.' }
+  ]
+};
+
+const countrySelect = document.getElementById('countrySelect');
+const crisisContainer = document.getElementById('crisisCardContainer');
+
+function renderCrisisNumbers(countryCode) {
+  const list = crisisData[countryCode] || crisisData.OTHER;
+  crisisContainer.innerHTML = list.map(item => `
+    <div class="phone-card">
+      <div>
+        <strong style="display:block; font-size:1.05rem; color:var(--ink);">${item.name}</strong>
+        <p style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">${item.desc}</p>
+      </div>
+      <div>
+        ${item.num.startsWith('http') || item.num.includes('.org') || item.num.includes('.com')
+          ? `<a class="phone-number" href="https://${item.num}" target="_blank" rel="noopener">${item.num} ↗</a>`
+          : `<a class="phone-number" href="tel:${item.num.replace(/\s+/g,'')}">${item.num}</a>`}
+      </div>
+    </div>
+  `).join('');
+}
+
+countrySelect.addEventListener('change', (e) => renderCrisisNumbers(e.target.value));
+renderCrisisNumbers('AR');
+
+</script>
+</body>
+</html>
