@@ -102,21 +102,24 @@ section{padding:48px 0}
 
 footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:0.9rem}
 footer p{max-width:none}
-.wa{position:fixed;z-index:10;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));width:58px;height:58px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.28)}
-.wa:hover{filter:brightness(1.08)}
-.wa svg{width:32px;height:32px;fill:#fff}
 
-@media (max-width:600px){.hero{padding:36px 0 24px}section{padding:32px 0}.box{padding:18px}.respirator-stage{width:220px;height:220px}.respirator-circle{width:150px;height:150px}.respirator-outer-ring{width:200px;height:200px}.wa{width:54px;height:54px}}
+@media (max-width:600px){
+  .hero{padding:36px 0 24px}
+  section{padding:32px 0}
+  .box{padding:18px}
+  .respirator-stage{width:220px;height:220px}
+  .respirator-circle{width:150px;height:150px}
+  .respirator-outer-ring{width:200px;height:200px}
+}
 </style>
 </head>
 <body>
 
 <header id="top">
   <div class="wrap">
-    <nav aria-label="Navegación principal" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-      <div>
-        <a class="logo" href="#inicio" style="display:block; font-size:1.1rem; font-weight:700;">Kit de Calma · Lic. Jésica Favara</a>
-        <div style="font-size:0.8rem; color:var(--brand); font-weight:600;">Asistente para Ansiedad y Pánico</div>
+    <nav aria-label="Navegación principal" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+      <div style="margin:0 auto 0 0;">
+        <div style="font-size:1.1rem; font-weight:700; color:var(--ink);">Asistente para Ansiedad y Pánico</div>
       </div>
       <div>
         <a href="https://jesicafavara.com.ar/" style="display:inline-flex; align-items:center; gap:6px; font-weight:600; font-size:0.88rem; text-decoration:none;">← Ir a la web principal</a>
@@ -148,7 +151,7 @@ footer p{max-width:none}
     <div class="emergency-banner" role="status">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       <div>
-        <p><strong>Estás a salvo en este momento.</strong> Lo que sentís es una descarga de adrenalina en tu sistema nervioso. Es sumamente incómoda, pero <em>no es peligrosa</em> y va a disminuir paulatinamente.</p>
+        <p><strong>Estás a salvo en este momento.</strong> Lo que sentís es una descarga de adrenalina en tu sistema nervioso. Es sumamente incómoda, pero <em>no es peligrosa</em> y va a disminuir pauatinamente.</p>
       </div>
     </div>
 
@@ -246,26 +249,6 @@ footer p{max-width:none}
               <p style="font-size:0.9rem; margin:0;">Salpicate la cara con agua fría o sostené un hielo durante 15 segundos. Esto reduce abruptamente el ritmo cardíaco acelerado.</p>
             </div>
             <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">👣 Orientación corporal y gravedad</strong>
-              <p style="font-size:0.9rem; margin:0;">Apoyá firmemente las plantas de los pies contra el suelo. Sentí el soporte sólido que te sostiene debajo tuyo en este mismo instante.</p>
-            </div>
-            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">✊ Tensión y liberación muscular intensa</strong>
-              <p style="font-size:0.9rem; margin:0;">Cerrá los puños o apretá los hombros con fuerza durante 5 segundos y soltá de golpe. Permite descargar la activación muscular acumulada por la adrenalina.</p>
-            </div>
-            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🍋 Estímulo sensorial intenso</strong>
-              <p style="font-size:0.9rem; margin:0;">Morder una rodaja de limón, probar una menta fuerte o oler un aceite esencial penetrante interrumpe en segundos el bucle de pensamientos de pánico.</p>
-            </div>
-            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🫂 Presión propioceptiva (Abrazo de mariposa)</strong>
-              <p style="font-size:0.9rem; margin:0;">Cruzá los brazos sobre el pecho y da golpecitos suaves y alternados en los hombros. Esta estimulación bilaterial calma la hiperactivación del sistema nervioso.</p>
-            </div>
-            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🧘 Estiramiento e hiperextensión torácica</strong>
-              <p style="font-size:0.9rem; margin:0;">Abrí los brazos hacia los lados y llevá los hombros hacia atrás. Contrarresta la postura defensiva de colapso y facilita la entrada libre de aire.</p>
-            </div>
-            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
               <strong style="display:block; color:var(--brand); margin-bottom:6px;">🧱 Push a la pared (Resistencia isométrica)</strong>
               <p style="font-size:0.9rem; margin:0;">Apoyá las palmas con firmeza contra una pared y empujá durante 10 segundos como si quisieras moverla. Canaliza la descarga motora sin sobrecargar el pulso.</p>
             </div>
@@ -274,15 +257,432 @@ footer p{max-width:none}
               <p style="font-size:0.9rem; margin:0;">Colocá las manos sobre las piernas con las palmas abiertas hacia arriba y aflojá la mandíbula. Le indica fisiológicamente al cerebro que no hay amenaza activa.</p>
             </div>
             <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🦶 Anclaje ascendente gradual</strong>
-              <p style="font-size:0.9rem; margin:0;">Recorré con la mente tu cuerpo desde los dedos de los pies hacia arriba, notando el peso, el apoyo y el contacto con la ropa, de a una zona a la vez.</p>
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🍋 Estímulo sensorial intenso</strong>
+              <p style="font-size:0.9rem; margin:0;">Morder una rodaja de limón, probar una menta fuerte o oler un aceite esencial penetrante interrumpe en segundos el bucle de pensamientos de pánico.</p>
             </div>
             <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
-              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🧼 Lavado táctil receptivo</strong>
-              <p style="font-size:0.9rem; margin:0;">Lavate las manos prestando atención exclusiva a la textura del jabón y la temperatura del agua cayendo. Desplaza la atención fuera de los síntomas internos.</p>
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">🫂 Presión propioceptiva (Abrazo de mariposa)</strong>
+              <p style="font-size:0.9rem; margin:0;">Cruzá los brazos sobre el pecho y da golpecitos suaves y alternados en los hombros. Esta estimulación bilateral calma la hiperactivación del sistema nervioso.</p>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--line); border-radius:10px; padding:16px;">
+              <strong style="display:block; color:var(--brand); margin-bottom:6px;">✊ Tensión y liberación muscular intensa</strong>
+              <p style="font-size:0.9rem; margin:0;">Cerrá los puños o apretá los hombros con fuerza durante 5 segundos y soltá de golpe. Permite descargar la activación muscular acumulada por la adrenalina.</p>
             </div>
           </div>
         </div>
 
         <div style="margin-top:32px;">
-<!-- ... existing code -->
+          <h3 style="margin-bottom:12px;">Líneas de atención en crisis y emergencias</h3>
+          <p style="font-size:0.95rem;">Seleccioná tu país para ver las líneas gratuitas locales:</p>
+          
+          <div style="margin-bottom:16px;">
+            <select id="countrySelect" style="width:100%; max-width:320px; padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; font-weight:600;">
+              <option value="AR">🇦🇷 Argentina</option>
+              <option value="ES">🇪🇸 España</option>
+              <option value="MX">🇲🇽 México</option>
+              <option value="CL">🇨🇱 Chile</option>
+              <option value="CO">🇨🇴 Colombia</option>
+              <option value="US">🇺🇸 EE.UU. y Canadá</option>
+              <option value="OTHER">🌎 Otros países / Internacional</option>
+            </select>
+          </div>
+
+          <div id="crisisCardContainer" class="crisis-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="margin-bottom:0.5em;">Lic. Jésica Verónica Favara · Psicóloga · MN 58.746 · Buenos Aires, Argentina.</p>
+    <p style="font-size:0.85rem; color:var(--muted); margin:0;">La información de este sitio es de carácter orientativo y no constituye un diagnóstico ni reemplaza la consulta profesional individualizada.</p>
+  </div>
+</footer>
+
+<script>
+// --- TABS CONTROLLER ---
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.setAttribute('aria-selected', 'false'));
+    panels.forEach(p => p.classList.remove('active'));
+    
+    btn.setAttribute('aria-selected', 'true');
+    const targetId = btn.getAttribute('aria-controls');
+    document.getElementById(targetId).classList.add('active');
+  });
+});
+
+// --- WEB AUDIO API (GENTLE AUDIO CUES) ---
+let audioCtx = null;
+let soundEnabled = false;
+
+function playCalmTone(freq, duration) {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+document.getElementById('soundToggleBtn').addEventListener('click', function() {
+  soundEnabled = !soundEnabled;
+  this.textContent = `Sonido Guía: ${soundEnabled ? 'Activado' : 'Desactivado'}`;
+  this.classList.toggle('alt', soundEnabled);
+  if (soundEnabled) playCalmTone(440, 0.5);
+});
+
+// --- BREATHING ENGINE ---
+let isBreathing = false;
+let breathingTimeout = null;
+let currentPatternKey = 'progressive';
+let cycleCount = 0;
+
+const respiratorCircle = document.getElementById('respiratorCircle');
+const phaseText = document.getElementById('phaseText');
+const timerText = document.getElementById('timerText');
+const cycleIndicator = document.getElementById('cycleIndicator');
+const startBtn = document.getElementById('startBreathingBtn');
+const customControls = document.getElementById('customControls');
+
+const predefinedPatterns = {
+  progressive: { inhale: 4, hold: 4, exhale: 4, pause: 4, name: 'Progresiva (+1s por ciclo)' },
+  box: { inhale: 4, hold: 4, exhale: 4, pause: 4, name: 'Cuadrada (4-4-4-4)' },
+  478: { inhale: 4, hold: 7, exhale: 8, pause: 0, name: 'Calma Profunda (4-7-8)' },
+  diaphragm: { inhale: 4, hold: 0, exhale: 6, pause: 0, name: 'Tranquilizadora (4-6)' }
+};
+
+document.querySelectorAll('.pattern-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentPatternKey = btn.dataset.pattern;
+    customControls.style.display = currentPatternKey === 'custom' ? 'block' : 'none';
+    if (isBreathing) stopBreathing();
+  });
+});
+
+function getBreathingTimings() {
+  if (currentPatternKey === 'custom') {
+    return {
+      inhale: Math.max(1, parseInt(document.getElementById('cfgInhale').value) || 4),
+      hold: Math.max(0, parseInt(document.getElementById('cfgHold').value) || 0),
+      exhale: Math.max(1, parseInt(document.getElementById('cfgExhale').value) || 4),
+      pause: Math.max(0, parseInt(document.getElementById('cfgPause').value) || 0)
+    };
+  }
+  
+  const base = predefinedPatterns[currentPatternKey];
+  if (currentPatternKey === 'progressive') {
+    // Add cycleCount seconds to each active phase
+    const bonus = cycleCount;
+    return {
+      inhale: base.inhale + bonus,
+      hold: base.hold > 0 ? base.hold + bonus : 0,
+      exhale: base.exhale + bonus,
+      pause: base.pause > 0 ? base.pause + bonus : 0
+    };
+  }
+  return base;
+}
+
+startBtn.addEventListener('click', () => {
+  if (isBreathing) {
+    stopBreathing();
+  } else {
+    startBreathing();
+  }
+});
+
+function startBreathing() {
+  isBreathing = true;
+  cycleCount = 0;
+  startBtn.textContent = 'Detener';
+  startBtn.classList.add('alt');
+  runBreathingCycle();
+}
+
+function stopBreathing() {
+  isBreathing = false;
+  clearTimeout(breathingTimeout);
+  respiratorCircle.style.transition = 'transform 0.5s ease-out';
+  respiratorCircle.style.transform = 'scale(1)';
+  phaseText.textContent = 'Listo';
+  timerText.textContent = '0';
+  cycleIndicator.textContent = '';
+  startBtn.textContent = 'Iniciar Respiración';
+  startBtn.classList.remove('alt');
+}
+
+function runBreathingCycle() {
+  if (!isBreathing) return;
+  const timings = getBreathingTimings();
+  
+  if (currentPatternKey === 'progressive') {
+    cycleIndicator.textContent = `Ciclo ${cycleCount + 1}: Fases de ${timings.inhale}s`;
+  } else {
+    cycleIndicator.textContent = predefinedPatterns[currentPatternKey] ? predefinedPatterns[currentPatternKey].name : 'Personalizado';
+  }
+
+  // 1. INHALE
+  runPhase('Inhalá', timings.inhale, 1.4, 349.23, () => {
+    // 2. HOLD
+    if (timings.hold > 0) {
+      runPhase('Sostené', timings.hold, 1.4, 440, () => {
+        // 3. EXHALE
+        runPhase('Exhalá', timings.exhale, 1.0, 261.63, () => {
+          // 4. PAUSE
+          if (timings.pause > 0) {
+            runPhase('Pausa', timings.pause, 1.0, 220, () => {
+              cycleCount++;
+              runBreathingCycle();
+            });
+          } else {
+            cycleCount++;
+            runBreathingCycle();
+          }
+        });
+      });
+    } else {
+      // EXHALE IMMEDIATELY
+      runPhase('Exhalá', timings.exhale, 1.0, 261.63, () => {
+        if (timings.pause > 0) {
+          runPhase('Pausa', timings.pause, 1.0, 220, () => {
+            cycleCount++;
+            runBreathingCycle();
+          });
+        } else {
+          cycleCount++;
+          runBreathingCycle();
+        }
+      });
+    }
+  });
+}
+
+function runPhase(name, durationSec, targetScale, toneFreq, onComplete) {
+  if (!isBreathing) return;
+  phaseText.textContent = name;
+  respiratorCircle.style.transition = `transform ${durationSec}s ease-in-out`;
+  respiratorCircle.style.transform = `scale(${targetScale})`;
+  playCalmTone(toneFreq, 0.4);
+
+  let secondsLeft = durationSec;
+  timerText.textContent = secondsLeft;
+
+  const countdownInterval = setInterval(() => {
+    secondsLeft--;
+    if (secondsLeft > 0 && isBreathing) {
+      timerText.textContent = secondsLeft;
+    } else {
+      clearInterval(countdownInterval);
+    }
+  }, 1000);
+
+  breathingTimeout = setTimeout(() => {
+    clearInterval(countdownInterval);
+    if (isBreathing) onComplete();
+  }, durationSec * 1000);
+}
+
+// --- GROUNDING WIZARD 5-4-3-2-1 ---
+const groundingStepsData = [
+  { count: 5, title: '5 Cosas que podés VER', prompt: 'Observá tu entorno y anotá o marcá 5 objetos específicos a tu alrededor (colores, sombras, texturas):', placeholder: 'Ej: Una planta, un marco de foto, la luz en la pared...' },
+  { count: 4, title: '4 Cosas que podés TOCAR', prompt: 'Conectá con las sensaciones táctiles reales. Tocá o enfocate en 4 texturas presentes:', placeholder: 'Ej: La tela de mi pantalón, la mesa de madera fría...' },
+  { count: 3, title: '3 Cosas que podés ESCUCHAR', prompt: 'Prestá atención sostenida a los sonidos ambientales más sutiles o distantes:', placeholder: 'Ej: El viento afuerta, el motor de la heladera, mi respiración...' },
+  { count: 2, title: '2 Cosas que podés OLER', prompt: 'Inhalá suavemente y percibí 2 aromas u olores en tu espacio cercano:', placeholder: 'Ej: Perfume de jabón, aire fresco, café...' },
+  { count: 1, title: '1 Cosa que podés SABOREAR', prompt: 'Registrá 1 sabor en tu boca en este instante o realizá 1 afirmación positiva de calma:', placeholder: 'Ej: Gusto a menta fresca o "Estoy a salvo en este instante"' }
+];
+
+let currentStepIdx = 0;
+let userGroundingAnswers = Array(5).fill(null).map(() => []);
+
+const stepCard = document.getElementById('stepCard');
+const progressSteps = document.querySelectorAll('.progress-step');
+
+function renderGroundingStep() {
+  if (currentStepIdx >= groundingStepsData.length) {
+    renderGroundingCompletion();
+    return;
+  }
+
+  const data = groundingStepsData[currentStepIdx];
+  
+  // Update wizard step indicators
+  progressSteps.forEach((st, idx) => {
+    st.classList.remove('active', 'completed');
+    if (idx < currentStepIdx) st.classList.add('completed');
+    if (idx === currentStepIdx) st.classList.add('active');
+  });
+
+  let inputsHTML = '';
+  for (let i = 0; i < data.count; i++) {
+    const val = userGroundingAnswers[currentStepIdx][i] || '';
+    inputsHTML += `
+      <div class="grounding-input-group">
+        <div class="checkbox-custom ${val.trim() !== '' ? 'checked' : ''}" onclick="toggleGCheck(this, ${i})"></div>
+        <input type="text" class="g-input" placeholder="${data.placeholder}" value="${val}" oninput="updateGVal(${i}, this.value)">
+      </div>
+    `;
+  }
+
+  stepCard.innerHTML = `
+    <div class="step-header">
+      <div class="step-badge">${data.count}</div>
+      <div>
+        <h3 style="margin:0;">${data.title}</h3>
+        <p style="margin:0; font-size:0.9rem; color:var(--muted);">${data.prompt}</p>
+      </div>
+    </div>
+    <div class="grounding-inputs">${inputsHTML}</div>
+    <div style="display:flex; justify-size:space-between; gap:12px; margin-top:24px; flex-wrap:wrap;">
+      ${currentStepIdx > 0 ? `<button type="button" class="btn secondary" onclick="prevGStep()">Anterior</button>` : '<div></div>'}
+      <button type="button" class="btn" onclick="nextGStep()">${currentStepIdx === 4 ? 'Finalizar Anclaje' : 'Siguiente Paso →'}</button>
+    </div>
+  `;
+}
+
+function updateGVal(idx, value) {
+  userGroundingAnswers[currentStepIdx][idx] = value;
+  const container = stepCard.querySelectorAll('.grounding-input-group')[idx];
+  if (container) {
+    const check = container.querySelector('.checkbox-custom');
+    check.classList.toggle('checked', value.trim() !== '');
+  }
+}
+
+function toggleGCheck(el, idx) {
+  el.classList.toggle('checked');
+  const input = el.nextElementSibling;
+  if (el.classList.contains('checked') && !input.value) {
+    input.value = 'Reconocido';
+    userGroundingAnswers[currentStepIdx][idx] = 'Reconocido';
+  }
+}
+
+function nextGStep() {
+  currentStepIdx++;
+  renderGroundingStep();
+}
+
+function prevGStep() {
+  if (currentStepIdx > 0) {
+    currentStepIdx--;
+    renderGroundingStep();
+  }
+}
+
+function renderGroundingCompletion() {
+  progressSteps.forEach(st => st.classList.add('completed'));
+
+  let summaryHTML = '<ul class="summary-list">';
+  groundingStepsData.forEach((stData, sIdx) => {
+    const items = userGroundingAnswers[sIdx].filter(x => x && x.trim() !== '');
+    if (items.length > 0) {
+      summaryHTML += `<li class="summary-item"><strong>${stData.title}:</strong> ${items.join(', ')}</li>`;
+    }
+  });
+  summaryHTML += '</ul>';
+
+  stepCard.innerHTML = `
+    <div style="text-align:center; padding:10px 0;">
+      <div style="width:56px; height:56px; border-radius:50%; background:var(--soft); color:var(--brand); display:inline-flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:700; margin-bottom:12px;">✓</div>
+      <h3 style="margin-bottom:8px;">¡Excelente trabajo de anclaje!</h3>
+      <p style="color:var(--muted); font-size:0.95rem;">Has reconectado con tu entorno sensorial. Tu cuerpo y tu mente vuelven al presente seguro.</p>
+      ${summaryHTML}
+      <button type="button" class="btn" style="margin-top:16px;" onclick="resetGrounding()">Reiniciar Ejercicio</button>
+    </div>
+  `;
+}
+
+function resetGrounding() {
+  currentStepIdx = 0;
+  userGroundingAnswers = Array(5).fill(null).map(() => []);
+  renderGroundingStep();
+}
+
+renderGroundingStep();
+
+// --- CRISIS DIRECTORY SELECTOR ---
+const crisisData = {
+  AR: [
+    { name: 'Asistencia al Suicida y Crisis (AMBA / Arg)', num: '135', desc: 'Atención gratuita las 24 hs.' },
+    { name: 'Emergencias Médicas (SAME / Salud)', num: '107', desc: 'Ambulancias y emergencias médicas.' },
+    { name: 'Línea de Salud Mental CABA', num: '0800-999-0099', desc: 'Orientación y apoyo profesional.' }
+  ],
+  ES: [
+    { name: 'Línea de Atención a la Conducta Suicida', num: '024', desc: 'Atención nacional gratuita 24/7.' },
+    { name: 'Teléfono de la Esperanza', num: '717 003 717', desc: 'Asistencia emocional en crisis.' },
+    { name: 'Emergencias Generales', num: '112', desc: 'Urgencias médicas e intervenciones.' }
+  ],
+  MX: [
+    { name: 'Línea de la Vida (Secretaría de Salud)', num: '800 911 2000', desc: 'Atención 24 hs en todo México.' },
+    { name: 'SAPTEL (Apoyo Psicológico)', num: '55 5259 8121', desc: 'Servicio de salud mental por teléfono.' }
+  ],
+  CL: [
+    { name: 'Línea Quédate (Prevención MinSal)', num: '*4141', desc: 'Gratuito desde celulares 24 hs.' },
+    { name: 'Salud Responde', num: '600 360 7777', desc: 'Orientación profesional de salud.' }
+  ],
+  CO: [
+    { name: 'Línea 106 (Salud Mental Bogotá)', num: '106', desc: 'Ayuda y escucha profesional.' },
+    { name: 'Línea Nacional de Emergencias', num: '123', desc: 'Atención inmediata de urgencias.' }
+  ],
+  US: [
+    { name: 'Suicide & Crisis Lifeline (EE.UU.)', num: '988', desc: 'Llamada o texto en español 24/7.' },
+    { name: 'Crisis Text Line', num: 'Envía HOLA al 741741', desc: 'Apoyo por mensaje de texto.' }
+  ],
+  OTHER: [
+    { name: 'Befrienders Worldwide', num: 'befrienders.org', desc: 'Directorio global de líneas de prevención por país.' },
+    { name: 'Find A Helpline', num: 'findahelpline.com', desc: 'Buscador gratuito e confidencial de apoyo en crisis internacional.' }
+  ]
+};
+
+const countrySelect = document.getElementById('countrySelect');
+const crisisContainer = document.getElementById('crisisCardContainer');
+
+function renderCrisisNumbers(countryCode) {
+  const list = crisisData[countryCode] || crisisData.OTHER;
+  crisisContainer.innerHTML = list.map(item => `
+    <div class="phone-card">
+      <div>
+        <strong style="display:block; font-size:1.05rem; color:var(--ink);">${item.name}</strong>
+        <p style="font-size:0.85rem; color:var(--muted); margin:4px 0 10px;">${item.desc}</p>
+      </div>
+      <div>
+        ${item.num.startsWith('http') || item.num.includes('.org') || item.num.includes('.com')
+          ? `<a class="phone-number" href="https://${item.num}" target="_blank" rel="noopener">${item.num} ↗</a>`
+          : `<a class="phone-number" href="tel:${item.num.replace(/\s+/g,'')}">${item.num}</a>`}
+      </div>
+    </div>
+  `).join('');
+}
+
+countrySelect.addEventListener('change', (e) => renderCrisisNumbers(e.target.value));
+renderCrisisNumbers('AR');
+
+</script>
+</body>
+</html>
