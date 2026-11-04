@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comparador de Horarios | Lic. Jésica Favara</title>
+<meta name="description" content="Herramienta para cotejar zonas horarias y agendar sesiones online de psicoterapia, supervisión o espacios de consulta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbf7f1;
+  --surface: #ffffff;
+  --ink: #1d1a17;
+  --muted: #5f534a;
+  --brand: #a9603f;
+  --accent: #c08463;
+  --soft: #f6ede2;
+  --line: #e8d9c8;
+  --onbrand: #fbf6ef;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.6 "Atkinson Hyperlegible", Verdana, system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+
+.back-link {
+  font-size: 0.88rem;
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.wrap {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 20px;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tz-tool {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-top: 0;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+p.intro {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.tz-controls {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.tz-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tz-field label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.tz-input, .tz-select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tz-swap {
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--brand);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, background-color 0.2s;
+  margin-bottom: 2px;
+}
+
+.tz-swap:hover {
+  transform: rotate(180deg);
+  background: var(--line);
+}
+
+.add-city-btn {
+  background: none;
+  border: none;
+  color: var(--brand);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+  text-align: left;
+  text-decoration: underline;
+  margin-top: 2px;
+}
+
+.tz-clocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.tz-card {
+  border-radius: 14px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tz-card.day {
+  background: #e8f4fc;
+  color: #1e293b;
+  border-color: #bbe1fa;
+}
+
+.tz-card.night {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #334155;
+}
+
+.tz-card .city-name {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+.tz-card .utc {
+  font-size: 0.82rem;
+  opacity: 0.85;
+  margin-bottom: 10px;
+}
+
+.tz-card .time-val {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: monospace;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.tz-card .day-badge {
+  font-size: 0.78rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.tz-card.day .day-badge {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.tz-card.night .day-badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+}
+
+.shared-cities {
+  font-size: 0.78rem;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(150, 150, 150, 0.3);
+  opacity: 0.9;
+}
+
+.tz-diff-banner {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.95rem;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--soft);
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.calendar-action-box {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.calendar-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .calendar-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calendar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--brand);
+  color: var(--onbrand);
+  padding: 12px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 2px solid var(--brand);
+  transition: filter 0.2s, transform 0.1s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.calendar-btn:hover {
+  filter: brightness(1.08);
+}
+
+.calendar-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 100;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  max-width: 420px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  justify-content: flex-end;
+}
+
+.btn {
+  background: var(--brand);
+  color: var(--onbrand);
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn.alt {
+  background: transparent;
+  color: var(--brand);
+  border: 1px solid var(--line);
+}
+
+footer {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+@media (max-width: 640px) {
+  .tz-controls {
+    grid-template-columns: 1fr;
+  }
+  .tz-swap {
+    margin: 0 auto;
+    transform: rotate(90deg);
+  }
+  .tz-swap:hover {
+    transform: rotate(270deg);
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="https://jesicafavara.com.ar">Lic. Jésica Favara</a>
+  <a class="back-link" href="https://jesicafavara.com.ar">← Ir a la web principal</a>
+</header>
+
+<main class="wrap">
+  <div class="tz-tool">
+    <h1>Comparador de Horarios</h1>
+    <p class="intro">Ingresá una hora para cotejarla entre tu localidad y Buenos Aires y coordinar sin confusiones.</p>
+    
+    <div class="tz-controls">
+      <div class="tz-field">
+        <label for="tz-orig-city">Ciudad de Origen</label>
+        <select id="tz-orig-city" class="tz-select"></select>
+        <button type="button" class="add-city-btn" onclick="openAddModal('orig')">+ Agregar mi pueblo o ciudad</button>
+        <label for="tz-orig-time" style="font-size:0.8rem; margin-top:6px">Hora Origen</label>
+        <input type="time" id="tz-orig-time" class="tz-input">
+      </div>
+
+      <button type="button" id="tz-swap-btn" class="tz-swap" title="Intercambiar ciudades" aria-label="Intercambiar ciudades">⇄</button>
+
+      <div class="tz-field">
+        <label for="tz-dest-city">Ciudad Destino</label>
+        <select id="tz-dest-city" class="tz-select"></select>
+        <button type="button" class="add-city-btn" onclick="openAddModal('dest')">+ Agregar mi pueblo o ciudad</button>
+        <label for="tz-dest-time" style="font-size:0.8rem; margin-top:6px">Hora Destino</label>
+        <input type="time" id="tz-dest-time" class="tz-input">
+      </div>
+    </div>
+
+    <div class="tz-clocks">
+      <div id="tz-orig-card" class="tz-card day">
+        <div id="tz-orig-name" class="city-name">Buenos Aires</div>
+        <div id="tz-orig-utc" class="utc">UTC-3</div>
+        <div id="tz-orig-val" class="time-val">--:--</div>
+        <div id="tz-orig-badge" class="day-badge">Mismo día</div>
+        <div id="tz-orig-shared" class="shared-cities"></div>
+      </div>
+      
+      <div id="tz-dest-card" class="tz-card day">
+        <div id="tz-dest-name" class="city-name">Madrid</div>
+        <div id="tz-dest-utc" class="utc">UTC+1</div>
+        <div id="tz-dest-val" class="time-val">--:--</div>
+        <div id="tz-dest-badge" class="day-badge">Mismo día</div>
+        <div id="tz-dest-shared" class="shared-cities"></div>
+      </div>
+    </div>
+
+    <div id="tz-summary" class="tz-diff-banner">Seleccioná una hora o ciudad para comenzar...</div>
+
+    <div class="calendar-action-box">
+      <div class="calendar-options-grid">
+        <div class="tz-field">
+          <label for="event-type">Tipo de espacio</label>
+          <select id="event-type" class="tz-select" onchange="updateCalendarLinkData()">
+            <option value="Sesión individual">Sesión individual</option>
+            <option value="Supervisión clínica">Supervisión clínica</option>
+            <option value="Asesoría en investigación / estadística">Asesoría en investigación / estadística</option>
+            <option value="Grupo / Taller / Encuentro">Grupo / Taller / Encuentro</option>
+          </select>
+        </div>
+        <div class="tz-field">
+          <label for="event-duration">Duración (en minutos)</label>
+          <input type="number" id="event-duration" class="tz-input" value="50" min="5" max="480" step="5" oninput="updateCalendarLinkData()">
+        </div>
+      </div>
+
+      <a id="gcal-btn" href="#" target="_blank" rel="noopener" class="calendar-btn">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/></svg>
+        <span>Agregar a mi Google Calendar</span>
+      </a>
+      <span style="font-size:0.82rem; color:var(--muted); text-align:center;">Crea un recordatorio en tu agenda adaptado a tu hora local seleccionada.</span>
+    </div>
+  </div>
+</main>
+
+<div class="modal-overlay" id="add-modal" hidden>
+  <div class="modal">
+    <h3>Agregar pueblo o ciudad</h3>
+    <div class="tz-field" style="margin-bottom: 12px;">
+      <label for="custom-city-name">Nombre del lugar</label>
+      <input type="text" id="custom-city-name" class="tz-input" placeholder="Ej: Tandil / Bariloche / Girona">
+    </div>
+    <div class="tz-field">
+      <label for="custom-city-tz">Zona Horaria aproximada</label>
+      <select id="custom-city-tz" class="tz-select"></select>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn alt" onclick="closeAddModal()">Cancelar</button>
+      <button type="button" class="btn" onclick="saveCustomCity()">Guardar y seleccionar</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Lic. Jésica Verónica Favara · Psicóloga · MN 58.746 · Buenos Aires, Argentina</p>
+</footer>
+
+<script>
+(function(){
+const DEFAULT_CITIES = [
+  { name: "Buenos Aires", tz: "America/Argentina/Buenos_Aires" },
+  { name: "Santiago", tz: "America/Santiago" },
+  { name: "Lima", tz: "America/Lima" },
+  { name: "Bogotá", tz: "America/Bogota" },
+  { name: "Caracas", tz: "America/Caracas" },
+  { name: "Montevideo", tz: "America/Montevideo" },
+  { name: "Ciudad de México", tz: "America/Mexico_City" },
+  { name: "Guatemala", tz: "America/Guatemala" },
+  { name: "La Habana", tz: "America/Havana" },
+  { name: "Nueva York / Miami", tz: "America/New_York" },
+  { name: "Chicago", tz: "America/Chicago" },
+  { name: "Los Ángeles", tz: "America/Los_Angeles" },
+  { name: "Londres", tz: "Europe/London" },
+  { name: "Madrid / Barcelona", tz: "Europe/Madrid" },
+  { name: "París", tz: "Europe/Paris" },
+  { name: "Roma", tz: "Europe/Rome" },
+  { name: "Berlín", tz: "Europe/Berlin" },
+  { name: "Sídney", tz: "Australia/Sydney" },
+  { name: "Tokio", tz: "Asia/Tokyo" }
+];
+
+let citiesList = [...DEFAULT_CITIES];
+const el = id => document.getElementById(id);
+let activeSource = 'orig';
+let targetSelectTarget = 'orig';
+let globalRefDate = new Date();
+let globalNameOrig = "Buenos Aires";
+let globalNameDest = "Madrid";
+
+function getUtcOffset(tz, date){
+  const str = new Intl.DateTimeFormat("en-US",{timeZone:tz,timeZoneName:"shortOffset"}).format(date);
+  const match = str.match(/GMT([+-]\d+)?(?::(\d+))?/);
+  if(!match || !match[1]) return "UTC+0";
+  return "UTC" + match[1] + (match[2] ? ":" + match[2] : "");
+}
+
+function initSelects(){
+  const origSel = el("tz-orig-city"), destSel = el("tz-dest-city"), modalSel = el("custom-city-tz");
+  const currentOrig = origSel.value;
+  const currentDest = destSel.value;
+
+  origSel.innerHTML = ""; destSel.innerHTML = ""; modalSel.innerHTML = "";
+
+  const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  citiesList.forEach((c) => {
+    origSel.add(new Option(c.name, c.tz));
+    destSel.add(new Option(c.name, c.tz));
+    modalSel.add(new Option(`${c.name} (${c.tz})`, c.tz));
+  });
+
+  if(currentOrig) origSel.value = currentOrig;
+  else {
+    const origIdx = citiesList.findIndex(c => c.tz === userTz);
+    if(origIdx !== -1) origSel.selectedIndex = origIdx;
+    else {
+      origSel.add(new Option("Mi ubicación local", userTz), 0);
+      origSel.selectedIndex = 0;
+    }
+  }
+
+  if(currentDest) destSel.value = currentDest;
+  else {
+    const destIdx = citiesList.findIndex(c => c.tz === "Europe/Madrid");
+    destSel.selectedIndex = destIdx !== -1 ? destIdx : 1;
+  }
+}
+
+function updateClocks(){
+  const tzOrig = el("tz-orig-city").value;
+  const tzDest = el("tz-dest-city").value;
+  globalNameOrig = el("tz-orig-city").options[el("tz-orig-city").selectedIndex]?.text || "Origen";
+  globalNameDest = el("tz-dest-city").options[el("tz-dest-city").selectedIndex]?.text || "Destino";
+
+  const timeValOrig = el("tz-orig-time").value;
+  const timeValDest = el("tz-dest-time").value;
+
+  let refDate = new Date();
+
+  if(activeSource === 'orig' && timeValOrig){
+    const [h, m] = timeValOrig.split(":").map(Number);
+    const nowParts = new Intl.DateTimeFormat("en-US", { timeZone: tzOrig, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(refDate);
+    const y = nowParts.find(p=>p.type==='year').value;
+    const mo = nowParts.find(p=>p.type==='month').value;
+    const d = nowParts.find(p=>p.type==='day').value;
+    
+    const isoString = `${y}-${mo}-${d}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00`;
+    const tempDate = new Date(isoString);
+    const utcTime = tempDate.getTime() - (getTzOffsetMs(tzOrig, tempDate));
+    refDate = new Date(utcTime);
+  } else if(activeSource === 'dest' && timeValDest){
+    const [h, m] = timeValDest.split(":").map(Number);
+    const nowParts = new Intl.DateTimeFormat("en-US", { timeZone: tzDest, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(refDate);
+    const y = nowParts.find(p=>p.type==='year').value;
+    const mo = nowParts.find(p=>p.type==='month').value;
+    const d = nowParts.find(p=>p.type==='day').value;
+    
+    const isoString = `${y}-${mo}-${d}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00`;
+    const tempDate = new Date(isoString);
+    const utcTime = tempDate.getTime() - (getTzOffsetMs(tzDest, tempDate));
+    refDate = new Date(utcTime);
+  }
+
+  globalRefDate = refDate;
+
+  const origTimeStr = new Intl.DateTimeFormat("es-AR", { timeZone: tzOrig, hour: "2-digit", minute: "2-digit", hour12: false }).format(refDate);
+  const destTimeStr = new Intl.DateTimeFormat("es-AR", { timeZone: tzDest, hour: "2-digit", minute: "2-digit", hour12: false }).format(refDate);
+
+  if(!timeValOrig && !timeValDest){
+    el("tz-orig-val").textContent = "--:--";
+    el("tz-dest-val").textContent = "--:--";
+  } else {
+    el("tz-orig-val").textContent = origTimeStr;
+    el("tz-dest-val").textContent = destTimeStr;
+  }
+
+  el("tz-orig-utc").textContent = getUtcOffset(tzOrig, refDate);
+  el("tz-dest-utc").textContent = getUtcOffset(tzDest, refDate);
+
+  if(activeSource === 'orig' && timeValOrig) el("tz-dest-time").value = destTimeStr;
+  if(activeSource === 'dest' && timeValDest) el("tz-orig-time").value = origTimeStr;
+
+  el("tz-orig-name").textContent = globalNameOrig;
+  el("tz-dest-name").textContent = globalNameDest;
+
+  const hOrig = timeValOrig ? parseInt(origTimeStr.split(":")[0]) : 12;
+  const hDest = timeValDest ? parseInt(destTimeStr.split(":")[0]) : 12;
+
+  setTheme(el("tz-orig-card"), hOrig);
+  setTheme(el("tz-dest-card"), hDest);
+
+  const dayDiff = getDayDiff(refDate, tzOrig, tzDest);
+  el("tz-orig-badge").textContent = "Día de referencia";
+  el("tz-dest-badge").textContent = dayDiff === 0 ? "Mismo día" : (dayDiff > 0 ? "Día siguiente (+1)" : "Día anterior (-1)");
+
+  const sharedOrig = citiesList.filter(c => c.tz !== tzOrig && getUtcOffset(c.tz, refDate) === getUtcOffset(tzOrig, refDate)).map(c => c.name).slice(0, 3);
+  const sharedDest = citiesList.filter(c => c.tz !== tzDest && getUtcOffset(c.tz, refDate) === getUtcOffset(tzDest, refDate)).map(c => c.name).slice(0, 3);
+
+  el("tz-orig-shared").textContent = sharedOrig.length ? `Comparte hora con: ${sharedOrig.join(", ")}` : "";
+  el("tz-dest-shared").textContent = sharedDest.length ? `Comparte hora con: ${sharedDest.join(", ")}` : "";
+
+  const diffHours = (getTzOffsetMs(tzDest, refDate) - getTzOffsetMs(tzOrig, refDate)) / (1000 * 60 * 60);
+  const sign = diffHours >= 0 ? "+" : "";
+  el("tz-summary").textContent = `${globalNameDest} tiene ${sign}${diffHours} hs respecto a ${globalNameOrig}`;
+
+  updateCalendarLinkData();
+}
+
+window.updateCalendarLinkData = function(){
+  if(!globalRefDate) return;
+  const durationMinutes = parseInt(el("event-duration").value) || 50;
+  const eventType = el("event-type").value || "Sesión individual";
+  
+  const endDate = new Date(globalRefDate.getTime() + durationMinutes * 60 * 1000);
+  
+  function toGCalISO(d){
+    return d.toISOString().replace(/-|:|\.\d\d\d/g, "");
+  }
+
+  const title = encodeURIComponent(`${eventType} - Lic. Jésica Favara`);
+  const details = encodeURIComponent(`Espacio coordinado (${globalNameOrig} / ${globalNameDest}).\nModalidad online: https://jesicafavara.com.ar`);
+  const dates = `${toGCalISO(globalRefDate)}/${toGCalISO(endDate)}`;
+  
+  el("gcal-btn").href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}`;
+}
+
+function getTzOffsetMs(tz, date){
+  const format = new Intl.DateTimeFormat("en-US", { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+  const parts = format.formatToParts(date);
+  const map = {};
+  parts.forEach(p => map[p.type] = p.value);
+  const targetDate = new Date(Date.UTC(map.year, map.month - 1, map.day, map.hour == 24 ? 0 : map.hour, map.minute, map.second));
+  return targetDate.getTime() - date.getTime();
+}
+
+function getDayDiff(date, tzA, tzB){
+  const dateA = new Date(date.toLocaleString("en-US", { timeZone: tzA }));
+  const dateB = new Date(date.toLocaleString("en-US", { timeZone: tzB }));
+  return Math.floor((Date.UTC(dateB.getFullYear(), dateB.getMonth(), dateB.getDate()) - Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate())) / 86400000);
+}
+
+function setTheme(cardEl, hour){
+  if(hour >= 6 && hour < 19){
+    cardEl.className = "tz-card day";
+  } else {
+    cardEl.className = "tz-card night";
+  }
+}
+
+window.openAddModal = function(target){
+  targetSelectTarget = target;
+  el("custom-city-name").value = "";
+  el("add-modal").hidden = false;
+  el("custom-city-name").focus();
+};
+
+window.closeAddModal = function(){
+  el("add-modal").hidden = true;
+};
+
+window.saveCustomCity = function(){
+  const name = el("custom-city-name").value.trim();
+  const tz = el("custom-city-tz").value;
+  if(!name){
+    alert("Por favor, ingresá un nombre para la ciudad o pueblo.");
+    return;
+  }
+  
+  const newCity = { name: name, tz: tz };
+  citiesList.unshift(newCity);
+  initSelects();
+  
+  if(targetSelectTarget === 'orig') el("tz-orig-city").selectedIndex = 0;
+  else el("tz-dest-city").selectedIndex = 0;
+
+  closeAddModal();
+  updateClocks();
+};
+
+el("tz-orig-city").addEventListener("change", () => { updateClocks(); });
+el("tz-dest-city").addEventListener("change", () => { updateClocks(); });
+
+el("tz-orig-time").addEventListener("input", () => { activeSource = 'orig'; updateClocks(); });
+el("tz-dest-time").addEventListener("input", () => { activeSource = 'dest'; updateClocks(); });
+
+el("tz-swap-btn").addEventListener("click", () => {
+  const o = el("tz-orig-city"), d = el("tz-dest-city");
+  const temp = o.value;
+  o.value = d.value;
+  d.value = temp;
+  
+  const tOrig = el("tz-orig-time").value;
+  el("tz-orig-time").value = el("tz-dest-time").value;
+  el("tz-dest-time").value = tOrig;
+
+  updateClocks();
+});
+
+initSelects();
+updateClocks();
+})();
+</script>
+</body>
+</html>
