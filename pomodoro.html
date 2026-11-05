@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Temporizador Pomodoro para Estudio y Enfoque | Lic. Jésica Favara</title>
+<meta name="description" content="Temporizador Pomodoro interactivo con música Lofi en vivo, ruido marrón/rosado sintetizado, gestión de tareas y contador de distracciones para potenciar tu concentración.">
+<meta name="author" content="Jésica Verónica Favara">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<meta name="theme-color" content="#fbf7f1">
+<link rel="canonical" href="https://jesicafavara.com.ar/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf7f1;--surface:#ffffff;--ink:#1d1a17;--muted:#5f534a;--brand:#a9603f;--accent:#c08463;--soft:#f6ede2;--line:#e8d9c8;--onbrand:#fbf6ef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1713;--surface:#261f19;--ink:#f0e6d9;--muted:#b8a898;--brand:#e0a07c;--accent:#d58f68;--soft:#241d17;--line:#3b3027;--onbrand:#1c1713}}
+:root[data-theme="dark"]{--bg:#1c1713;--surface:#261f19;--ink:#f0e6d9;--muted:#b8a898;--brand:#e0a07c;--accent:#d58f68;--soft:#241d17;--line:#3b3027;--onbrand:#1c1713}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 "Atkinson Hyperlegible",Verdana,system-ui,sans-serif}
+h1,h2,h3{font-family:"Atkinson Hyperlegible",Verdana,system-ui,sans-serif;font-weight:700;line-height:1.2;margin:0 0 .5em;color:var(--ink)}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);letter-spacing:.01em;margin:0 0 .15em}
+h2{font-size:clamp(1.5rem,3.2vw,2.1rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 1em;max-width:70ch}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;flex-wrap:wrap}
+
+.btn{display:inline-block;background:var(--brand);color:var(--onbrand);padding:10px 20px;border-radius:999px;text-decoration:none;font-weight:600;border:2px solid var(--brand);cursor:pointer;font:inherit;text-align:center;transition:all 0.2s}
+.btn.alt{background:transparent;color:var(--brand)}
+.btn.secondary{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;margin-bottom:24px;box-shadow:0 2px 10px rgba(0,0,0,0.02)}
+
+/* Mode Selector Pills */
+.mode-selector{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px;flex-wrap:wrap}
+.mode-btn{border:none;background:transparent;color:var(--muted);font:inherit;font-size:0.88rem;font-weight:600;padding:8px 18px;border-radius:999px;cursor:pointer;transition:all 0.2s}
+.mode-btn:hover{color:var(--brand)}
+.mode-btn.active{background:var(--brand);color:var(--onbrand);box-shadow:0 2px 6px rgba(169,96,63,0.25)}
+
+/* Linear Focus Display & Progress Bar */
+.timer-container{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0 20px}
+.timer-card-wrapper{width:100%;max-width:440px;background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:28px 24px;margin:10px 0 20px;text-align:center;box-shadow:inset 0 1px 3px rgba(0,0,0,0.02)}
+.timer-time{font-size:4rem;font-weight:700;line-height:1;letter-spacing:-0.03em;color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:12px}
+.timer-progress-track{width:100%;height:10px;background:var(--line);border-radius:999px;overflow:hidden;position:relative;margin:18px 0 12px}
+.timer-progress-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--brand),var(--accent));border-radius:999px;transition:width 0.8s linear}
+.timer-phase-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:999px;background:var(--surface);color:var(--brand);font-size:0.85rem;font-weight:600;border:1px solid var(--line)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--brand)}
+.status-dot.active{animation:pulseGlow 1.8s infinite ease-in-out}
+@keyframes pulseGlow{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:0.6}}
+
+/* Tasks Manager */
+.task-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg);border:1px solid var(--line);border-radius:10px;margin-bottom:8px;transition:border-color 0.2s}
+.task-item:hover{border-color:var(--accent)}
+.task-item.completed span{text-decoration:line-through;opacity:0.6}
+
+footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-size:0.9rem}
+footer p{max-width:none}
+
+@media (max-width:600px){
+  .wrap{padding:0 18px}
+  .box{padding:18px}
+  .timer-time{font-size:3rem}
+}
+</style>
+</head>
+<body>
+
+  <header id="top">
+    <div class="wrap">
+      <nav aria-label="Navegación principal">
+        <div style="font-size:1.1rem; font-weight:700; color:var(--ink);">Temporizador Pomodoro y Enfoque</div>
+        <a href="https://jesicafavara.com.ar/" style="font-weight:600; font-size:0.88rem; text-decoration:none;">← Ir a la web principal</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap" style="padding-top:28px; padding-bottom:56px;">
+      
+      <!-- Bloque Principal del Temporizador -->
+      <div class="box">
+        <!-- Selector de Modo y Configuración -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+          <div class="mode-selector" role="radiogroup" aria-label="Modo de sesión">
+            <button type="button" class="mode-btn active" data-mode="focus">Enfoque</button>
+            <button type="button" class="mode-btn" data-mode="shortBreak">Descanso Corto</button>
+            <button type="button" class="mode-btn" data-mode="longBreak">Descanso Largo</button>
+          </div>
+          
+          <button type="button" id="btnToggleCustom" class="btn secondary" style="font-size:0.8rem; padding:6px 14px;">⚙️ Personalizar tiempos</button>
+        </div>
+
+        <!-- Panel de Configuración de Tiempos y Presets -->
+        <div id="customTimePanel" style="display:none; background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:20px;">
+          <p style="font-size:0.88rem; font-weight:600; margin-bottom:10px; color:var(--ink);">Presets comprobados o tiempos personalizados (minutos):</p>
+          
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+            <button type="button" class="btn secondary preset-btn" data-f="25" data-sb="5" data-lb="15" style="font-size:0.8rem; padding:5px 12px;">Clásico (25 / 5 min)</button>
+            <button type="button" class="btn secondary preset-btn" data-f="50" data-sb="10" data-lb="20" style="font-size:0.8rem; padding:5px 12px;">Deep Work (50 / 10 min)</button>
+            <button type="button" class="btn secondary preset-btn" data-f="52" data-sb="17" data-lb="30" style="font-size:0.8rem; padding:5px 12px;">Técnica 52 / 17</button>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:12px;">
+            <label style="font-size:0.82rem; font-weight:600;">Enfoque (m):
+              <input type="number" id="inputFocusTime" min="1" max="120" value="25" style="width:100%; padding:6px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+            <label style="font-size:0.82rem; font-weight:600;">Descanso corto (m):
+              <input type="number" id="inputShortTime" min="1" max="60" value="5" style="width:100%; padding:6px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+            <label style="font-size:0.82rem; font-weight:600;">Descanso largo (m):
+              <input type="number" id="inputLongTime" min="1" max="60" value="15" style="width:100%; padding:6px; border-radius:8px; border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-top:4px;">
+            </label>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Enfoque con Barra de Progreso Lineal -->
+        <div class="timer-container">
+          <div class="timer-card-wrapper">
+            <div class="timer-time" id="timerDisplay">25:00</div>
+            
+            <div class="timer-progress-track">
+              <div class="timer-progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="timer-phase-badge">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="phaseLabel">Sesión de Enfoque</span>
+            </div>
+          </div>
+
+          <!-- Botones de Acción -->
+          <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; align-items:center;">
+            <button type="button" class="btn" id="btnStartPause" style="min-width:140px;">Iniciar</button>
+            <button type="button" class="btn secondary" id="btnReset">Reiniciar</button>
+            <button type="button" class="btn secondary" id="btnAutoSwitch" title="Avanza automáticamente al siguiente bloque">🔄 Auto-secuencia: ON</button>
+          </div>
+        </div>
+
+        <!-- Estadísticas de Sesión -->
+        <div style="display:flex; justify-content:space-around; align-items:center; flex-wrap:wrap; gap:16px; border-top:1px solid var(--line); padding-top:18px; margin-top:10px;">
+          <div style="text-align:center;">
+            <span style="font-size:0.8rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Pomodoros completados</span>
+            <div id="pomodoroCountDisplay" style="font-size:1.5rem; font-weight:700; color:var(--brand);">🍅 0 / 4</div>
+          </div>
+          <div style="text-align:center;">
+            <span style="font-size:0.8rem; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Distracciones observadas</span>
+            <div style="display:flex; align-items:center; justify-content:center; gap:8px; margin-top:4px;">
+              <span id="distractionCountDisplay" style="font-size:1.4rem; font-weight:700; color:var(--ink);">0</span>
+              <button type="button" id="btnAddDistraction" class="btn secondary" style="font-size:0.75rem; padding:4px 10px;" title="Registrá distracciones sin pausar el reloj">+1 Registrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reproductor de Música Lofi y Sonidos de Fondo -->
+      <div class="box">
+        <h3 style="margin-bottom:6px;">🎵 Música Lofi y Sonidos Ambientales</h3>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:16px;">Seleccioná música lofi continua en vivo o tonos de ruido constante sintetizado para enmascarar ruidos molestos.</p>
+        
+        <!-- Lofi Streams -->
+        <div style="margin-bottom:18px; padding-bottom:16px; border-bottom:1px solid var(--line);">
+          <span style="font-size:0.8rem; font-weight:700; color:var(--brand); display:block; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em;">Canales Lofi en Vivo:</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn secondary" id="btnLofi1" style="font-size:0.85rem; padding:8px 16px;">🎧 Lofi Chill Beats</button>
+            <button type="button" class="btn secondary" id="btnLofi2" style="font-size:0.85rem; padding:8px 16px;">🌧️ Lofi Lluvia & Piano</button>
+            <button type="button" class="btn secondary" id="btnLofi3" style="font-size:0.85rem; padding:8px 16px;">☕ Cozy Ambient Lofi</button>
+          </div>
+          <div id="lofiPlayerControls" style="display:none; margin-top:12px; align-items:center; gap:12px; flex-wrap:wrap; background:var(--bg); padding:10px 14px; border-radius:10px; border:1px solid var(--line);">
+            <span id="lofiTrackLabel" style="font-size:0.85rem; font-weight:600; color:var(--brand);">Conectando estación Lofi...</span>
+            <label style="font-size:0.82rem; font-weight:600; color:var(--muted); display:inline-flex; align-items:center; gap:6px;">Volumen:
+              <input type="range" id="lofiVolume" min="0" max="1" step="0.05" value="0.4" style="accent-color:var(--brand); cursor:pointer;">
+            </label>
+            <button type="button" id="btnLofiStop" class="btn alt" style="padding:4px 12px; font-size:0.8rem; border-width:1px;">Detener Lofi</button>
+          </div>
+        </div>
+
+        <!-- Ruido Sintetizado -->
+        <div>
+          <span style="font-size:0.8rem; font-weight:700; color:var(--brand); display:block; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.05em;">Ruido Constante Sintetizado:</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn secondary" id="btnNoiseBrown" style="font-size:0.85rem; padding:8px 16px;">Ruido Marrón (Profundo)</button>
+            <button type="button" class="btn secondary" id="btnNoisePink" style="font-size:0.85rem; padding:8px 16px;">Ruido Rosado (Suave)</button>
+            <button type="button" class="btn secondary" id="btnNoiseOff" style="font-size:0.85rem; padding:8px 16px; display:none;">Apagar ruido ambiental</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Objetivos y Tareas del Bloque -->
+      <div class="box">
+        <h3 style="margin-bottom:6px;">📋 Tareas del Bloque de Estudio</h3>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:14px;">Define los temas concretos que vas a avanzar durante la sesión actual.</p>
+        
+        <form id="taskForm" style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+          <input type="text" id="taskInput" placeholder="Ej: Leer capítulo 3 de Psicología Cognitiva..." style="flex:1; min-width:200px; padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:inherit;" required>
+          <button type="submit" class="btn" style="padding:10px 20px; font-size:0.9rem;">Agregar</button>
+        </form>
+
+        <div id="taskList"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p style="margin-bottom:0.5em;">Lic. Jésica Verónica Favara · Psicóloga · MN 58.746 · Buenos Aires, Argentina.</p>
+      <p style="font-size:0.85rem; color:var(--muted); margin:0;">Herramienta psicoeducativa de apoyo al estudio y autorregulación del enfoque.</p>
+    </div>
+  </footer>
+
+  <script>
+    // --- ESTADO Y CONFIGURACIÓN DEL RELOJ ---
+    let timerState = {
+      mode: 'focus',
+      timeLeft: 25 * 60,
+      totalDuration: 25 * 60,
+      isRunning: false,
+      intervalId: null,
+      completedPomodoros: 0,
+      distractionsCount: 0
+    };
+
+    let timeConfigs = {
+      focus: 25,
+      shortBreak: 5,
+      longBreak: 15
+    };
+
+    let autoSwitch = true;
+
+    // --- REPRODUCTOR DE MÚSICA LOFI ---
+    let lofiAudio = null;
+    const lofiStreams = {
+      lofi1: { name: '🎧 Lofi Chill Beats', url: 'https://stream.zeno.fm/f3vkg29352uvw' },
+      lofi2: { name: '🌧️ Lofi Lluvia & Piano', url: 'https://stream.zeno.fm/0r0xa79251zuv' },
+      lofi3: { name: '☕ Cozy Ambient Lofi', url: 'https://stream.zeno.fm/4v43a8v352uvw' }
+    };
+
+    const lofiPlayerControls = document.getElementById('lofiPlayerControls');
+    const lofiTrackLabel = document.getElementById('lofiTrackLabel');
+    const lofiVolume = document.getElementById('lofiVolume');
+    const btnLofiStop = document.getElementById('btnLofiStop');
+
+    function stopLofi() {
+      if (lofiAudio) {
+        lofiAudio.pause();
+        lofiAudio.src = '';
+        lofiAudio = null;
+      }
+      lofiPlayerControls.style.display = 'none';
+      document.querySelectorAll('#btnLofi1, #btnLofi2, #btnLofi3').forEach(b => b.classList.remove('alt'));
+    }
+
+    function playLofi(key, btnEl) {
+      stopAmbientNoise();
+      
+      if (lofiAudio && lofiAudio.dataset.key === key) {
+        stopLofi();
+        return;
+      }
+
+      stopLofi();
+      const stream = lofiStreams[key];
+      if (!stream) return;
+
+      lofiTrackLabel.textContent = `Conectando a ${stream.name}...`;
+      lofiPlayerControls.style.display = 'inline-flex';
+
+      lofiAudio = new Audio();
+      lofiAudio.dataset.key = key;
+      lofiAudio.volume = parseFloat(lofiVolume.value) || 0.4;
+
+      lofiAudio.onerror = function() {
+        lofiTrackLabel.textContent = `Transmisión no disponible temporalmente. Probá otra estación.`;
+      };
+
+      lofiAudio.onplaying = function() {
+        lofiTrackLabel.textContent = `Reproduciendo: ${stream.name}`;
+        btnEl.classList.add('alt');
+      };
+
+      lofiAudio.src = stream.url;
+      lofiAudio.play().catch((err) => {
+        console.warn("Autoplay bloqueado o fallo de red:", err);
+        lofiTrackLabel.textContent = `Hacé clic nuevamente para iniciar el audio.`;
+      });
+    }
+
+    document.getElementById('btnLofi1').addEventListener('click', function() { playLofi('lofi1', this); });
+    document.getElementById('btnLofi2').addEventListener('click', function() { playLofi('lofi2', this); });
+    document.getElementById('btnLofi3').addEventListener('click', function() { playLofi('lofi3', this); });
+
+    lofiVolume.addEventListener('input', (e) => {
+      if (lofiAudio) lofiAudio.volume = parseFloat(e.target.value);
+    });
+
+    btnLofiStop.addEventListener('click', stopLofi);
+
+    // --- SINTETIZADOR DE RUIDO AMBIENTAL (WEB AUDIO API) ---
+    let audioCtx = null;
+    let noiseNode = null;
+
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playSoftChime() {
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        const freqs = [523.25, 659.25, 783.99];
+        
+        freqs.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + (idx * 0.12));
+          
+          gain.gain.setValueAtTime(0, now + (idx * 0.12));
+          gain.gain.linearRampToValueAtTime(0.08, now + (idx * 0.12) + 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + (idx * 0.12) + 1.8);
+          
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.start(now + (idx * 0.12));
+          osc.stop(now + (idx * 0.12) + 1.8);
+        });
+      } catch(e) {}
+    }
+
+    function stopAmbientNoise() {
+      if (noiseNode) {
+        try {
+          noiseNode.stop();
+          noiseNode.disconnect();
+        } catch(e) {}
+        noiseNode = null;
+      }
+      document.getElementById('btnNoiseOff').style.display = 'none';
+      document.querySelectorAll('#btnNoiseBrown, #btnNoisePink').forEach(b => b.classList.remove('alt'));
+    }
+
+    function playAmbientNoise(type) {
+      stopLofi();
+      stopAmbientNoise();
+      try {
+        const ctx = getAudioContext();
+        const bufferSize = ctx.sampleRate * 2;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+
+        let lastOut = 0.0;
+        let b0=0, b1=0, b2=0, b3=0, b4=0, b5=0, b6=0;
+
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          if (type === 'brown') {
+            data[i] = (lastOut + (0.02 * white)) / 1.02;
+            lastOut = data[i];
+            data[i] *= 3.5;
+          } else if (type === 'pink') {
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            data[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+            data[i] *= 0.11;
+            b6 = white * 0.115926;
+          }
+        }
+
+        noiseNode = ctx.createBufferSource();
+        noiseNode.buffer = buffer;
+        noiseNode.loop = true;
+
+        const gainNode = ctx.createGain();
+        gainNode.gain.setValueAtTime(0.05, ctx.currentTime);
+
+        noiseNode.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        noiseNode.start();
+
+        document.getElementById('btnNoiseOff').style.display = 'inline-block';
+        if (type === 'brown') document.getElementById('btnNoiseBrown').classList.add('alt');
+        if (type === 'pink') document.getElementById('btnNoisePink').classList.add('alt');
+      } catch(e) {}
+    }
+
+    document.getElementById('btnNoiseBrown').addEventListener('click', () => playAmbientNoise('brown'));
+    document.getElementById('btnNoisePink').addEventListener('click', () => playAmbientNoise('pink'));
+    document.getElementById('btnNoiseOff').addEventListener('click', stopAmbientNoise);
+
+    // --- LÓGICA DEL TEMPORIZADOR Y DOM ---
+    const timerDisplay = document.getElementById('timerDisplay');
+    const phaseLabel = document.getElementById('phaseLabel');
+    const statusDot = document.getElementById('statusDot');
+    const progressBar = document.getElementById('progressBar');
+    const btnStartPause = document.getElementById('btnStartPause');
+    const btnReset = document.getElementById('btnReset');
+    const btnAutoSwitch = document.getElementById('btnAutoSwitch');
+    const pomodoroCountDisplay = document.getElementById('pomodoroCountDisplay');
+    const distractionCountDisplay = document.getElementById('distractionCountDisplay');
+
+    function updateDisplay() {
+      const mins = Math.floor(timerState.timeLeft / 60);
+      const secs = timerState.timeLeft % 60;
+      const formattedTime = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      
+      timerDisplay.textContent = formattedTime;
+      document.title = `${formattedTime} - ${timerState.mode === 'focus' ? 'Enfoque' : 'Descanso'} | Pomodoro`;
+
+      const progressPercent = (timerState.timeLeft / timerState.totalDuration) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+    }
+
+    function setMode(mode) {
+      pauseTimer();
+      timerState.mode = mode;
+      timerState.totalDuration = timeConfigs[mode] * 60;
+      timerState.timeLeft = timerState.totalDuration;
+
+      document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+      });
+
+      if (mode === 'focus') {
+        phaseLabel.textContent = 'Sesión de Enfoque';
+      } else if (mode === 'shortBreak') {
+        phaseLabel.textContent = 'Descanso Corto';
+      } else {
+        phaseLabel.textContent = 'Descanso Largo';
+      }
+
+      updateDisplay();
+    }
+
+    function startTimer() {
+      if (timerState.isRunning) return;
+      getAudioContext();
+      timerState.isRunning = true;
+      btnStartPause.textContent = 'Pausar';
+      btnStartPause.classList.add('alt');
+      statusDot.classList.add('active');
+
+      timerState.intervalId = setInterval(() => {
+        if (timerState.timeLeft > 0) {
+          timerState.timeLeft--;
+          updateDisplay();
+        } else {
+          onTimerComplete();
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      timerState.isRunning = false;
+      clearInterval(timerState.intervalId);
+      btnStartPause.textContent = 'Iniciar';
+      btnStartPause.classList.remove('alt');
+      statusDot.classList.remove('active');
+    }
+
+    function onTimerComplete() {
+      pauseTimer();
+      playSoftChime();
+
+      if (timerState.mode === 'focus') {
+        timerState.completedPomodoros++;
+        const cycleMod = timerState.completedPomodoros % 4;
+        pomodoroCountDisplay.textContent = `🍅 ${timerState.completedPomodoros} / 4`;
+
+        if (autoSwitch) {
+          if (cycleMod === 0 && timerState.completedPomodoros > 0) {
+            setMode('longBreak');
+          } else {
+            setMode('shortBreak');
+          }
+          startTimer();
+        }
+      } else {
+        if (autoSwitch) {
+          setMode('focus');
+          startTimer();
+        }
+      }
+    }
+
+    btnStartPause.addEventListener('click', () => {
+      if (timerState.isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    btnReset.addEventListener('click', () => {
+      pauseTimer();
+      timerState.timeLeft = timerState.totalDuration;
+      updateDisplay();
+    });
+
+    btnAutoSwitch.addEventListener('click', () => {
+      autoSwitch = !autoSwitch;
+      btnAutoSwitch.textContent = `🔄 Auto-secuencia: ${autoSwitch ? 'ON' : 'OFF'}`;
+      btnAutoSwitch.classList.toggle('alt', !autoSwitch);
+    });
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => setMode(btn.dataset.mode));
+    });
+
+    // Custom Times Panel Toggle & Inputs
+    const btnToggleCustom = document.getElementById('btnToggleCustom');
+    const customTimePanel = document.getElementById('customTimePanel');
+    const inputFocusTime = document.getElementById('inputFocusTime');
+    const inputShortTime = document.getElementById('inputShortTime');
+    const inputLongTime = document.getElementById('inputLongTime');
+
+    btnToggleCustom.addEventListener('click', () => {
+      const isHidden = customTimePanel.style.display === 'none';
+      customTimePanel.style.display = isHidden ? 'block' : 'none';
+    });
+
+    function applyCustomTimes() {
+      timeConfigs.focus = Math.max(1, parseInt(inputFocusTime.value) || 25);
+      timeConfigs.shortBreak = Math.max(1, parseInt(inputShortTime.value) || 5);
+      timeConfigs.longBreak = Math.max(1, parseInt(inputLongTime.value) || 15);
+
+      setMode(timerState.mode);
+    }
+
+    [inputFocusTime, inputShortTime, inputLongTime].forEach(input => {
+      input.addEventListener('change', applyCustomTimes);
+    });
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        inputFocusTime.value = btn.dataset.f;
+        inputShortTime.value = btn.dataset.sb;
+        inputLongTime.value = btn.dataset.lb;
+        applyCustomTimes();
+      });
+    });
+
+    // Distractions Counter
+    document.getElementById('btnAddDistraction').addEventListener('click', () => {
+      timerState.distractionsCount++;
+      distractionCountDisplay.textContent = timerState.distractionsCount;
+    });
+
+    // Task List Manager
+    const taskForm = document.getElementById('taskForm');
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+
+    taskForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = taskInput.value.trim();
+      if (!val) return;
+
+      const item = document.createElement('div');
+      item.className = 'task-item';
+      item.innerHTML = `
+        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+          <input type="checkbox" onchange="this.closest('.task-item').classList.toggle('completed', this.checked)" style="accent-color:var(--brand); cursor:pointer;">
+          <span>${val}</span>
+        </label>
+        <button type="button" onclick="this.closest('.task-item').remove()" class="btn alt" style="padding:2px 8px; font-size:0.75rem; border:none;">✕</button>
+      `;
+
+      taskList.appendChild(item);
+      taskInput.value = '';
+    });
+
+    // Initial Display Render
+    updateDisplay();
+  </script>
+</body>
+</html>
