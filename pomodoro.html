@@ -235,19 +235,12 @@ footer p{max-width:none}
 
     let autoSwitch = true;
 
-    // --- REPRODUCTOR DE MÚSICA LOFI (Streamings estables HTTPS) ---
+    // --- REPRODUCTOR DE MÚSICA LOFI ---
     let lofiAudio = null;
     const lofiStreams = {
       lofi1: { name: '🎧 Lofi Chill Beats', url: 'https://stream.zeno.fm/f3vkg29352uvw' },
       lofi2: { name: '🌧️ Lofi Lluvia & Piano', url: 'https://stream.zeno.fm/0r0xa79251zuv' },
       lofi3: { name: '☕ Cozy Ambient Lofi', url: 'https://stream.zeno.fm/4v43a8v352uvw' }
-    };
-
-    // Respaldos de streams de alta disponibilidad (Lofi Girl & Chillhop Public Transmissions)
-    const fallbackStreams = {
-      lofi1: 'https://icecast.vrt.be/mnm_hits-high.mp3',
-      lofi2: 'https://stream.spacialaudio.com/api/v2/stream/62657/play.mp3',
-      lofi3: 'https://stream.zeno.fm/f3vkg29352uvw'
     };
 
     const lofiPlayerControls = document.getElementById('lofiPlayerControls');
@@ -258,8 +251,7 @@ footer p{max-width:none}
     function stopLofi() {
       if (lofiAudio) {
         lofiAudio.pause();
-        lofiAudio.removeAttribute('src');
-        lofiAudio.load();
+        lofiAudio.src = '';
         lofiAudio = null;
       }
       lofiPlayerControls.style.display = 'none';
@@ -283,19 +275,10 @@ footer p{max-width:none}
 
       lofiAudio = new Audio();
       lofiAudio.dataset.key = key;
-      lofiAudio.crossOrigin = "anonymous";
       lofiAudio.volume = parseFloat(lofiVolume.value) || 0.4;
 
       lofiAudio.onerror = function() {
-        console.warn("Error en el stream principal, probando respaldo...");
-        if (fallbackStreams[key]) {
-          lofiAudio.src = fallbackStreams[key];
-          lofiAudio.play().catch(() => {
-            lofiTrackLabel.textContent = `Hacé clic aquí para autorizar la reproducción del audio.`;
-          });
-        } else {
-          lofiTrackLabel.textContent = `No se pudo conectar al stream. Hacé clic para reintentar.`;
-        }
+        lofiTrackLabel.textContent = `Transmisión no disponible temporalmente. Probá otra estación.`;
       };
 
       lofiAudio.onplaying = function() {
@@ -304,15 +287,10 @@ footer p{max-width:none}
       };
 
       lofiAudio.src = stream.url;
-      
-      // Promesa de reproducción con manejo de bloqueo de autoplay del navegador
-      const playPromise = lofiAudio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.warn("Autoplay bloqueado por el navegador:", err);
-          lofiTrackLabel.textContent = `⚠️ Hacé clic de nuevo para autorizar el audio.`;
-        });
-      }
+      lofiAudio.play().catch((err) => {
+        console.warn("Autoplay bloqueado o fallo de red:", err);
+        lofiTrackLabel.textContent = `Hacé clic nuevamente para iniciar el audio.`;
+      });
     }
 
     document.getElementById('btnLofi1').addEventListener('click', function() { playLofi('lofi1', this); });
