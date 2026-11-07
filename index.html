@@ -41,6 +41,17 @@ nav ul a:hover{color:var(--brand)}
 section{padding:64px 0}
 .alt-bg{background:var(--soft)}
 .grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid-2x2 {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 768px) {
+  .grid-2x2 {
+    grid-template-columns: 1fr; /* Se pasa a una sola columna en celulares */
+  }
+}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px}
 .box p{margin:0;color:var(--muted)}
 .tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0 0 1em}
@@ -118,11 +129,11 @@ footer{padding:40px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   </div>
 
   <!-- 4 EJES PARES (CUADRÍCULA 2x2 SIMÉTRICA) -->
-  <section id="areas" class="alt-bg">
+<section id="areas" class="alt-bg">
     <div class="wrap">
       <h2>Áreas de práctica profesional</h2>
       <p>Un enfoque basado en la evidencia estructurado en cuatro pilares fundamentales para la clínica, la evaluación, la formación y la investigación.</p>
-      <div class="grid">
+      <div class="grid-2x2">
         <div class="box">
           <h3>1. Atención Clínica</h3>
           <p>Psicoterapia individual con orientación cognitivo conductual (TCC), incorporando recursos de ACT, DBT y EMDR. Abordaje estructurado con objetivos claros para adolescentes y adultos.</p>
